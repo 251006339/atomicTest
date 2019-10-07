@@ -1,0 +1,7 @@
+资料在xmind保存;链接地址:
+1.volatile : 解决使用原子类
+2.原子类:AtomicInteger
+  原子包装类: AtomicReference;
+
+ 3:线程池:Exexcutors
+    使用new的方式创建线程,线程池默认的最大

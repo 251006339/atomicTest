@@ -1,0 +1,82 @@
+思考题:
+1.A线程执行同步方法,B线程.,是否可以同时执行同一个对象的非同步方法?
+   A线程执行,B可以同时执行非同步方法
+2.同上,B线程是否可以同时执行同一个对象中别一个同步方法?
+     不可以,A线程执行,B线程同步方法等待;
+3.线程抛出异常会释放锁吗?
+   自动锁会释放锁;
+   手动锁需要手动释放锁,需要在finally里执行unlock才会释放锁;
+4.volatile 和synchronized有什么区别?
+   volatile 可见性  不具有原子性  禁止重排序
+   volatile和cas无锁搭配使用: 非阻塞并发
+   synchronized 自动锁, 阻塞线程,具有原子性, 一致性;
+5.写一个程序AtomicXXXX类比synchronzied 更高效
+   -- ThreadDemo4  使用join 先执行 计算出执行时间
+6.AtomicXX类可以保证可见性吗？请写一个程序来证明 （a_006）
+ -- ThreadDemo5   可以.   一个线程 循环操作.  在主线程中设置为false 释放出循环;
+7.写一个程序证明AtomicXXX类多个方法不构成原子性 （a_007）
+ --ThreadDemo6
+8.写一个程序模拟死锁
+--ThreadDemo7
+9. 写一个程序，在main线程中启动100个线程，100个线程完成后，主线程打印"完成"（使用join和countdownlatch都可以完成）。
+   --ThreadDemo8   线程之间通讯 CountDownLatch   锁对象线程通讯  wait notify  ReentreeLock Condition  await  sign
+10. synchronized 是可重入锁
+       * 子类调用父类的同步方法，是否也是可重入的？
+       * 答：可重入的
+11. 多个方法使用两个常量值一样做同步锁可以?
+       不可以,容易造成死锁现象. 其实两个底层地址一样
+12.  * 面试题（淘宝？）
+     * 实现一个容器，提供两个方法，add，size
+     * 写两个线程，线程1添加10个元素到容器中，线程2实现监控元素的个数，当个数到达5时，线程2给出提示并结束
+13.  ReentrantLock 与 synchronized：
+
+ 1. ReentrantLock 可以完成 synchronized 的任何功能
+ 2. 但是ReentrantLock比 synchronized 更灵活，主要体现在如下几个方面
+ 3. tryLock 非阻塞锁，可以设置等待时间 5秒之后没有获取锁则释放;
+ 4. lockInterruptibly 可以中断等待
+ 5. 可以设置公平锁
+
+14./**
+    * 经典面试题：写一个固定容量的容器，拥有put和get方法，以及getCount方法
+    * 能够支持2个生产者线程以及10个消费者线程的阻塞调用
+    *
+    * 点：生产者消费者模式
+    *
+    * 如果调用 get方法时，容器为空，get方法就需要阻塞等待
+    * 如果调用 put方法时，容器满了，put方法就需要阻塞等待
+    *
+    * 实现方式：
+    * 1. wait/notify
+    * 2. Condition await sign
+    为什么调用 notifyAll 而不是 notify ？
+     sync 是非公平锁   notify有可能再次叫醒一个生产者线程
+    */
+15: ThreadLocal<Person> 线程局部变量 只对本地线程负责;其他线程访问不到泛型值的内容
+16.java --class  --jvm 字节码  i++  底层是三步操作; 重排序.
+17.CAS 是什么? --->compareAndSet
+               比较并交换  底层Unsefa  --CAS底层思想,--->ABA-->原子引用更新--->
+    缺点: 1.只能保证一个公共变量的原子操作
+          2.aba问题;
+          3.如果cas失败.会一直尝试,循环操作,会加大cpu的开销
+18.ABA问题解决:
+   理解原子引用+新增一种机制,修改版本号(时间戳)  cas不够??
+   T1 --100 1  \
+   T2 --100 1  101 2   100 -3
+    ABADemo
+19.  集合同步  Collections.synchronizedMap();  List  Set
+20. 自旋锁<spinlock>--- 循环  是指尝试获取锁的线程不会立即阻塞,而是采用循环方式尝试获取锁;减少线程上下文切换消耗,缺点是循环会消耗CPU;
+      SpinLockDemo
+      读写锁 <独占共享锁>---ReadWriterLock
+      sync---->lock
+21.//2 .阻塞队列
+        //2.1 阻塞队列有没有好的一面
+        //2.2 不得不阻塞,你如何管理;
+      // ArrayBlockQueue == 数组结构组成的有界阻塞队列;
+      //linkedBlockQueue --由链表结构组成的有界(但大小默认值为Integer.MAX_VALUE)阻塞队列         21亿 大小
+      //SynchronusQueue   --不存储元素的阻塞队列.也
+
+
+
+
+
+
